@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="rootPane" prefHeight="700" prefWidth="1100" styleClass="root-container" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CoordinatorDashboardController">
+
+
+    <HBox alignment="CENTER_LEFT" prefHeight="64" styleClass="top-nav">
+        <HBox alignment="CENTER_LEFT" spacing="12" HBox.hgrow="ALWAYS">
+            <Label style="-fx-font-size:22px;" text="🕊" />
+            <Label styleClass="nav-brand" text="GHADS" />
+            <Label styleClass="nav-role-badge" text="Coordinator Panel" />
+        </HBox>
+        <HBox alignment="CENTER" spacing="4">
+            <Button fx:id="btnDashboard" onAction="#showDashboard" styleClass="nav-tab,nav-tab-active" text="Dashboard" />
+            <Button fx:id="btnFamilies" onAction="#showFamilies" styleClass="nav-tab" text="Families" />
+            <Button fx:id="btnAid" onAction="#showAid" styleClass="nav-tab" text="Aid Distribution" />
+            <Button fx:id="btnProfile" onAction="#showProfile" styleClass="nav-tab" text="Profile" />
+            <Button fx:id="btnPassword" onAction="#showChangePassword" styleClass="nav-tab" text="Change Password" />
+        </HBox>
+        <HBox alignment="CENTER_RIGHT" spacing="12" HBox.hgrow="ALWAYS">
+            <Label fx:id="coordNameLabel" styleClass="nav-username" text="Coordinator" />
+            <Button onAction="#handleLogout" styleClass="btn-logout" text="Logout" />
+        </HBox>
+        <padding><Insets left="24" right="24" /></padding>
+    </HBox>
+
+    <StackPane styleClass="content-area" VBox.vgrow="ALWAYS">
+        
+        <VBox fx:id="dashboardPage" spacing="28" visible="true">
+            <padding><Insets bottom="32" left="32" right="32" top="32" /></padding>
+            <VBox spacing="4">
+                <Label styleClass="section-title" text="Dashboard" />
+                <Label fx:id="orgNameLabel" styleClass="section-subtitle" text="" />
+            </VBox>
+            <HBox spacing="20">
+                <VBox spacing="12" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="stat-card-label" text="Total Families" />
+                    </HBox>
+                    <Label fx:id="totalFamiliesLabel" styleClass="stat-card-number" text="0" />
+                </VBox>
+                <VBox spacing="12" styleClass="stat-card stat-card-green" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="stat-card-label" text="Served by My Org" />
+                    </HBox>
+                    <Label fx:id="servedLabel" styleClass="stat-card-number" text="0" />
+                </VBox>
+                <VBox spacing="12" styleClass="stat-card stat-card-warn" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="stat-card-label" text="Not Yet Served" />
+                    </HBox>
+                    <Label fx:id="notServedLabel" styleClass="stat-card-number-warn" text="0" />
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <VBox fx:id="familiesPage" spacing="20" visible="false">
+            <padding><Insets bottom="32" left="32" right="32" top="32" /></padding>
+            <VBox spacing="4">
+                <Label styleClass="section-title" text="Families" />
+                <Label styleClass="section-subtitle" text="Register a new family" />
+            </VBox>
+            <VBox spacing="16" styleClass="form-card">
+                <Label styleClass="form-title" text="Add New Family" />
+                <HBox spacing="12">
+                    <TextField fx:id="famNameField" promptText="Household Name" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="famPhoneField" promptText="Phone" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="famLocationField" promptText="Location / Camp" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                </HBox>
+                <HBox spacing="12">
+                    <TextField fx:id="famSizeField" promptText="Family Size" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="famNatIdField" promptText="National ID" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <ComboBox fx:id="famVulCombo" promptText="Vulnerability Level" styleClass="combo-field" HBox.hgrow="ALWAYS" />
+                </HBox>
+                <HBox spacing="10">
+                    <Button onAction="#addFamily" styleClass="btn-primary" text="Add" />
+                    <Button onAction="#resetFamilyFields" styleClass="btn-secondary" text="Reset" />
+                </HBox>
+            </VBox>
+            <TableView fx:id="familiesTable" styleClass="table-view" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="famIdCol" prefWidth="60" text="ID" />
+                    <TableColumn fx:id="famNameCol" prefWidth="180" text="Name" />
+                    <TableColumn fx:id="famPhoneCol" prefWidth="120" text="Phone" />
+                    <TableColumn fx:id="famLocCol" prefWidth="150" text="Location" />
+                    <TableColumn fx:id="famSizeCol" prefWidth="70" text="Size" />
+                    <TableColumn fx:id="famNatCol" prefWidth="130" text="National ID" />
+                    <TableColumn fx:id="famVulCol" prefWidth="110" text="Vulnerability" />
+                </columns>
+            </TableView>
+        </VBox>
+
+        <VBox fx:id="aidPage" spacing="20" visible="false">
+            <padding><Insets bottom="32" left="32" right="32" top="32" /></padding>
+            <VBox spacing="4">
+                <Label styleClass="section-title" text="Aid Distribution" />
+                <Label styleClass="section-subtitle" text="Duplicate check runs automatically before saving" />
+            </VBox>
+            <VBox spacing="12" styleClass="form-card">
+                <Label styleClass="form-title" text="Search Families" />
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <ComboBox fx:id="aidFilterCombo" prefWidth="280" promptText="Most Vulnerable / Not Served" styleClass="combo-field" />
+                    <Button onAction="#filterFamilies" styleClass="btn-primary" text="Search" />
+                    <Button onAction="#refreshAidTable" styleClass="btn-secondary" text="Show All" />
+                </HBox>
+            </VBox>
+            <TableView fx:id="aidFamiliesTable" prefHeight="220" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="aidFamIdCol" prefWidth="60" text="ID" />
+                    <TableColumn fx:id="aidFamNameCol" prefWidth="200" text="Name" />
+                    <TableColumn fx:id="aidFamVulCol" prefWidth="120" text="Vulnerability" />
+                    <TableColumn fx:id="aidFamLocCol" prefWidth="150" text="Location" />
+                    <TableColumn fx:id="aidLastAidCol" prefWidth="140" text="Last Aid Date" />
+                </columns>
+            </TableView>
+            <VBox spacing="12" styleClass="form-card">
+                <Label styleClass="form-title" text="Record Aid Distribution" />
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="field-label" text="Selected Family:" />
+                    <Label fx:id="selectedFamilyLabel" style="-fx-text-fill:#1B4332; -fx-font-weight:bold;" text="— None selected —" />
+                </HBox>
+                <HBox spacing="10">
+                    <Button onAction="#recordAid" styleClass="btn-primary" text="Record Aid" />
+                    <Button onAction="#clearAidSelection" styleClass="btn-secondary" text="Clear" />
+                </HBox>
+            </VBox>
+        </VBox>
+
+        <VBox fx:id="profilePage" spacing="20" visible="false">
+            <padding><Insets bottom="32" left="32" right="32" top="32" /></padding>
+            <VBox spacing="4">
+                <Label styleClass="section-title" text="My Profile" />
+                <Label styleClass="section-subtitle" text="View and edit your profile information" />
+            </VBox>
+            <VBox maxWidth="500" spacing="16" styleClass="form-card">
+                <Label styleClass="form-title" text="Edit Profile" />
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Full Name" />
+                    <TextField fx:id="profileFullNameField" styleClass="input-field-plain" />
+                </VBox>
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Email" />
+                    <TextField fx:id="profileEmailField" styleClass="input-field-plain" />
+                </VBox>
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Username" />
+                    <TextField fx:id="profileUsernameField" styleClass="input-field-plain" />
+                </VBox>
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Organization" />
+                    <TextField fx:id="profileOrgField" editable="false" style="-fx-background-color:#F0F0F0;" styleClass="input-field-plain" />
+                </VBox>
+                <HBox spacing="10">
+                    <Button onAction="#saveProfile" styleClass="btn-primary" text="Save" />
+                    <Button onAction="#resetProfile" styleClass="btn-secondary" text="Reset" />
+                </HBox>
+            </VBox>
+        </VBox>
+
+        <VBox fx:id="passwordPage" spacing="20" visible="false">
+            <padding><Insets bottom="32" left="32" right="32" top="32" /></padding>
+            <VBox spacing="4">
+                <Label styleClass="section-title" text="Change Password" />
+                <Label styleClass="section-subtitle" text="Enter your current password to set a new one" />
+            </VBox>
+            <VBox maxWidth="400" spacing="16" styleClass="form-card">
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Current Password" />
+                    <PasswordField fx:id="currentPasswordField" styleClass="input-field-plain" />
+                </VBox>
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="New Password" />
+                    <PasswordField fx:id="newPasswordField" styleClass="input-field-plain" />
+                </VBox>
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Confirm New Password" />
+                    <PasswordField fx:id="confirmPasswordField" styleClass="input-field-plain" />
+                </VBox>
+                <HBox spacing="10">
+                    <Button onAction="#changePassword" styleClass="btn-primary" text="Change Password" />
+                    <Button onAction="#resetPasswordFields" styleClass="btn-secondary" text="Reset" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </StackPane>
+</VBox>

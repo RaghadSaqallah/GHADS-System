@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox prefHeight="560" prefWidth="900" styleClass="root-container" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+
+    <!-- ===== RIGHT PANEL ===== -->
+    <VBox alignment="CENTER" prefHeight="560.0" prefWidth="922.0" spacing="0" styleClass="right-panel">
+
+        <VBox maxWidth="360" prefHeight="495.0" prefWidth="331.0" spacing="28" styleClass="login-card">
+
+            <!-- Header -->
+            <VBox spacing="6">
+                <Label styleClass="login-title" text="Welcome Back" />
+                <Label styleClass="login-subtitle" text="Sign in to your account to continue" />
+            </VBox>
+
+            <!-- Form -->
+            <VBox spacing="20">
+
+                <!-- Username -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Username" />
+                    <HBox alignment="CENTER_LEFT" styleClass="input-wrapper">
+                        <TextField fx:id="usernameField" promptText="Enter your username" styleClass="input-field" HBox.hgrow="ALWAYS" />
+                    </HBox>
+                </VBox>
+
+                <!-- Password -->
+                <VBox spacing="8">
+                    <Label styleClass="field-label" text="Password" />
+                    <HBox alignment="CENTER_LEFT" styleClass="input-wrapper">
+                        <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="input-field" HBox.hgrow="ALWAYS" />
+                    </HBox>
+                </VBox>
+
+                <!-- Error Label -->
+                <Label fx:id="errorLabel" maxWidth="360" styleClass="error-label" text="" wrapText="true" />
+
+                <!-- Login Button -->
+                <Button fx:id="loginButton" maxWidth="Infinity" onAction="#handleLogin" styleClass="login-btn" text="Sign In" />
+
+            </VBox>
+
+            <!-- Role hint -->
+            <HBox alignment="CENTER" spacing="6">
+                <Label styleClass="hint-text" text="Admin or Coordinator?" />
+            </HBox>
+
+        </VBox>
+
+        <VBox.margin>
+            <Insets bottom="40" left="40" right="40" top="40" />
+        </VBox.margin>
+    </VBox>
+
+</HBox>

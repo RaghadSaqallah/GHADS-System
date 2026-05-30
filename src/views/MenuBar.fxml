@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="29.0" prefWidth="900.0" stylesheets="@../styles/MenuBarStyle.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuBarController">
+    <MenuBar fx:id="menuBar" styleClass="menu-bar">
+            <menus>
+                <Menu text="File">
+                    <items>
+                        <MenuItem fx:id="exitMenuItem" onAction="#exitHandle" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu text="Appearance">
+                    <items>
+                        <Menu text="Font Family">
+                            <items>
+                        <RadioMenuItem fx:id="Arial" mnemonicParsing="false" onAction="#fontFamilyHandle" text="Arial">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="fontfamily" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="Georgia" mnemonicParsing="false" onAction="#fontFamilyHandle" text="Georgia" toggleGroup="$fontfamily" />
+                        <RadioMenuItem fx:id="Verdana" mnemonicParsing="false" onAction="#fontFamilyHandle" text="Verdana" toggleGroup="$fontfamily" />
+                        <RadioMenuItem fx:id="Times_New_Roman" mnemonicParsing="false" onAction="#fontFamilyHandle" text="Times New Roman" toggleGroup="$fontfamily" />
+                            </items>
+                        </Menu>
+                        <Menu text="Font Size">
+                            <items>
+                        <RadioMenuItem fx:id="fontSize12" mnemonicParsing="false" onAction="#fontSizeHandle" text="12">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="fontSize" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="fontSize14" mnemonicParsing="false" onAction="#fontSizeHandle" text="14" toggleGroup="$fontSize" />
+                        <RadioMenuItem fx:id="fontSize16" mnemonicParsing="false" onAction="#fontSizeHandle" text="16" toggleGroup="$fontSize" />
+                            </items>
+                        </Menu>
+                        <Menu text="Font Style">
+                            <items>
+                        <RadioMenuItem fx:id="fontNormalItem" mnemonicParsing="false" onAction="#fontStyleHandle" text="Normal">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="FontStyle" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="fontBoldItem" mnemonicParsing="false" onAction="#fontStyleHandle" text="Bold" toggleGroup="$FontStyle" />
+                        <RadioMenuItem fx:id="fontItalicItem" mnemonicParsing="false" onAction="#fontStyleHandle" text="Italic" toggleGroup="$FontStyle" />
+                            </items>
+                        </Menu>
+                    </items>
+                </Menu>
+                <Menu text="Help">
+                    <items>
+                        <MenuItem fx:id="aboutMenuItem" onAction="#aboutHandle" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+</AnchorPane>

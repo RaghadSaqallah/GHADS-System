@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="rootPane" prefHeight="700" prefWidth="1100" styleClass="root-container" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminDashboardController">
+
+
+    <HBox alignment="CENTER_LEFT" prefHeight="64" spacing="0" styleClass="top-nav">
+        <HBox alignment="CENTER_LEFT" spacing="12" HBox.hgrow="ALWAYS">
+            <Label style="-fx-font-size:22px;" text="🕊" />
+            <Label styleClass="nav-brand" text="GHADS" />
+            <Label styleClass="nav-role-badge" text="Admin Panel" />
+        </HBox>
+
+        <!-- Nav Buttons -->
+        <HBox alignment="CENTER" spacing="4">
+            <Button fx:id="btnDashboard" onAction="#showDashboard" styleClass="nav-tab,nav-tab-active" text="Dashboard" />
+            <Button fx:id="btnOrgs" onAction="#showOrganizations" styleClass="nav-tab" text="Organizations" />
+            <Button fx:id="btnUsers" onAction="#showUsers" styleClass="nav-tab" text="Users" />
+            <Button fx:id="btnFamilies" onAction="#showFamilies" styleClass="nav-tab" text="Families" />
+            <Button fx:id="btnAid" onAction="#showAid" styleClass="nav-tab" text="Aid Records" />
+        </HBox>
+
+        <!-- Right side -->
+        <HBox alignment="CENTER_RIGHT" spacing="12" HBox.hgrow="ALWAYS">
+            <Label fx:id="adminNameLabel" styleClass="nav-username" text="Admin" />
+            <Button onAction="#handleLogout" styleClass="btn-logout" text="Logout" />
+        </HBox>
+
+        <HBox.margin>
+            <Insets left="24" right="24" />
+        </HBox.margin>
+        <padding>
+            <Insets left="24" right="24" />
+        </padding>
+    </HBox>
+
+    <!-- ===== CONTENT AREA ===== -->
+    <StackPane styleClass="content-area" VBox.vgrow="ALWAYS">
+
+        <!-- ── DASHBOARD PAGE ── -->
+        <VBox fx:id="dashboardPage" spacing="28" visible="true">
+            <padding>
+                <Insets bottom="32" left="32" right="32" top="32" />
+            </padding>
+
+            <!-- Page Title -->
+            <VBox spacing="4">
+                <Label styleClass="section-title" text="Dashboard" />
+                <Label styleClass="section-subtitle" text="Overview of the system" />
+            </VBox>
+
+            <!-- Stats Row 1 -->
+            <HBox spacing="20">
+                <!-- Card 1 -->
+                <VBox spacing="12" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="stat-card-label" text="Organizations" />
+                    </HBox>
+                    <Label fx:id="totalOrgsLabel" styleClass="stat-card-number" text="0" />
+                </VBox>
+
+                <!-- Card 2 -->
+                <VBox spacing="12" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="stat-card-label" text="Coordinators" />
+                    </HBox>
+                    <Label fx:id="totalUsersLabel" styleClass="stat-card-number" text="0" />
+                </VBox>
+            </HBox>
+
+            <!-- Stats Row 2 -->
+            <HBox spacing="20">
+                <!-- Card 3 -->
+                <VBox spacing="12" styleClass="stat-card stat-card-green" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="stat-card-label" text="Families Registered" />
+                    </HBox>
+                    <Label fx:id="totalFamiliesLabel" styleClass="stat-card-number" text="0" />
+                </VBox>
+
+                <!-- Card 4 -->
+                <VBox spacing="12" styleClass="stat-card stat-card-warn" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="stat-card-label" text="Families Not Served" />
+                    </HBox>
+                    <Label fx:id="notServedLabel" styleClass="stat-card-number-warn" text="0" />
+                </VBox>
+            </HBox>
+
+        </VBox>
+
+        <!-- ── ORGANIZATIONS PAGE ── -->
+        <VBox fx:id="organizationsPage" spacing="20" visible="false">
+            <padding>
+                <Insets bottom="32" left="32" right="32" top="32" />
+            </padding>
+            <VBox spacing="4">
+                <Label styleClass="section-title" text="Organizations" />
+                <Label styleClass="section-subtitle" text="Manage all organizations in the system" />
+            </VBox>
+
+            <!-- Form -->
+            <VBox spacing="16" styleClass="form-card">
+                <Label styleClass="form-title" text="Add / Edit Organization" />
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <TextField fx:id="orgNameField" promptText="Organization Name" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="orgTypeField" promptText="Type (NGO, UN, Local)" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="orgContactField" promptText="Contact Info" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                </HBox>
+                <HBox spacing="10">
+                    <Button onAction="#addOrg" styleClass="btn-primary" text="Add" />
+                    <Button onAction="#updateOrg" styleClass="btn-secondary" text="Update" />
+                    <Button onAction="#deleteOrg" styleClass="btn-danger" text="Delete" />
+                    <Button onAction="#resetOrgFields" styleClass="btn-secondary" text="Reset" />
+                </HBox>
+            </VBox>
+
+            <TableView fx:id="orgsTable" styleClass="table-view" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="orgIdCol" prefWidth="60" text="ID" />
+                    <TableColumn fx:id="orgNameCol" prefWidth="220" text="Name" />
+                    <TableColumn fx:id="orgTypeCol" prefWidth="150" text="Type" />
+                    <TableColumn fx:id="orgContactCol" prefWidth="250" text="Contact Info" />
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- ── USERS PAGE ── -->
+        <VBox fx:id="usersPage" spacing="20" visible="false">
+            <padding>
+                <Insets bottom="32" left="32" right="32" top="32" />
+            </padding>
+            <VBox spacing="4">
+                <Label styleClass="section-title" text="Users" />
+                <Label styleClass="section-subtitle" text="Manage coordinator accounts" />
+            </VBox>
+
+            <VBox spacing="16" styleClass="form-card">
+                <Label styleClass="form-title" text="Add / Edit User" />
+                <HBox spacing="12">
+                    <TextField fx:id="userFullNameField" promptText="Full Name" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="userNameField" promptText="Username" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="userPasswordField" promptText="Password" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                </HBox>
+                <HBox spacing="12">
+                    <TextField fx:id="userEmailField" promptText="Email" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <ComboBox fx:id="userRoleCombo" promptText="Role" styleClass="combo-field" HBox.hgrow="ALWAYS" />
+                    <ComboBox fx:id="userOrgCombo" promptText="Organization" styleClass="combo-field" HBox.hgrow="ALWAYS" />
+                </HBox>
+                <HBox spacing="10">
+                    <Button onAction="#addUser" styleClass="btn-primary" text="Add" />
+                    <Button onAction="#updateUser" styleClass="btn-secondary" text="Update" />
+                    <Button onAction="#deleteUser" styleClass="btn-danger" text="Delete" />
+                    <Button onAction="#resetUserFields" styleClass="btn-secondary" text="Reset" />
+                </HBox>
+            </VBox>
+
+            <TableView fx:id="usersTable" styleClass="table-view" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="userIdCol" prefWidth="60" text="ID" />
+                    <TableColumn fx:id="userFullNameCol" prefWidth="180" text="Full Name" />
+                    <TableColumn fx:id="userNameCol" prefWidth="140" text="Username" />
+                    <TableColumn fx:id="userEmailCol" prefWidth="200" text="Email" />
+                    <TableColumn fx:id="userRoleCol" prefWidth="120" text="Role" />
+                    <TableColumn fx:id="userOrgCol" prefWidth="160" text="Organization" />
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- ── FAMILIES PAGE ── -->
+        <VBox fx:id="familiesPage" spacing="20" visible="false">
+            <padding>
+                <Insets bottom="32" left="32" right="32" top="32" />
+            </padding>
+            <VBox spacing="4">
+                <Label styleClass="section-title" text="Families" />
+                <Label styleClass="section-subtitle" text="Manage registered families" />
+            </VBox>
+
+            <VBox spacing="16" styleClass="form-card">
+                <Label styleClass="form-title" text="Add / Edit Family" />
+                <HBox spacing="12">
+                    <TextField fx:id="familyNameField" promptText="Household Name" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="familyPhoneField" promptText="Phone" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="familyLocationField" promptText="Location / Camp" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                </HBox>
+                <HBox spacing="12">
+                    <TextField fx:id="familySizeField" promptText="Family Size" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="familyNationalIdField" promptText="National ID" styleClass="input-field-plain" HBox.hgrow="ALWAYS" />
+                    <ComboBox fx:id="familyVulnerabilityCombo" promptText="Vulnerability Level" styleClass="combo-field" HBox.hgrow="ALWAYS" />
+                </HBox>
+                <HBox spacing="10">
+                    <Button onAction="#addFamily" styleClass="btn-primary" text="Add" />
+                    <Button onAction="#updateFamily" styleClass="btn-secondary" text="Update" />
+                    <Button onAction="#deleteFamily" styleClass="btn-danger" text="Delete" />
+                    <Button onAction="#resetFamilyFields" styleClass="btn-secondary" text="Reset" />
+                </HBox>
+            </VBox>
+
+            <TableView fx:id="familiesTable" styleClass="table-view" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="famIdCol" prefWidth="60" text="ID" />
+                    <TableColumn fx:id="famNameCol" prefWidth="180" text="Name" />
+                    <TableColumn fx:id="famPhoneCol" prefWidth="120" text="Phone" />
+                    <TableColumn fx:id="famLocCol" prefWidth="150" text="Location" />
+                    <TableColumn fx:id="famSizeCol" prefWidth="70" text="Size" />
+                    <TableColumn fx:id="famNatIdCol" prefWidth="130" text="National ID" />
+                    <TableColumn fx:id="famVulCol" prefWidth="110" text="Vulnerability" />
+                    <TableColumn fx:id="famRegisterCol" prefWidth="110" text="registration date" />
+                    <TableColumn fx:id="famLastAidCol" prefWidth="110" text="lsat aid date" />
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- ── AID PAGE ── -->
+        <VBox fx:id="aidPage" spacing="20" visible="false">
+            <padding>
+                <Insets bottom="32" left="32" right="32" top="32" />
+            </padding>
+            <VBox spacing="4">
+                <Label styleClass="section-title" text="Aid Distributions" />
+                <Label styleClass="section-subtitle" text="View all aid records across organizations" />
+            </VBox>
+
+            <!-- Search -->
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="form-card">
+                <Label styleClass="field-label" text="Filter by Organization:" />
+                <ComboBox fx:id="aidOrgCombo" prefWidth="220" promptText="All Organizations" styleClass="combo-field" />
+                <Button onAction="#searchAid" styleClass="btn-primary" text="Search" />
+                <Button onAction="#startAid" styleClass="btn-secondary" text="Show All" />
+            </HBox>
+
+            <TableView fx:id="aidTable" styleClass="table-view" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="aidIdCol" prefWidth="60" text="ID" />
+                    <TableColumn fx:id="aidFamilyCol" prefWidth="180" text="Family" />
+                    <TableColumn fx:id="aidOrgCol" prefWidth="180" text="Organization" />
+                    <TableColumn fx:id="aidByCol" prefWidth="160" text="Coordinator" />
+                    <TableColumn fx:id="aidDateCol" prefWidth="130" text="Date" />
+                </columns>
+            </TableView>
+        </VBox>
+
+    </StackPane>
+
+</VBox>
