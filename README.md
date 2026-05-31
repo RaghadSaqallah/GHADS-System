@@ -180,7 +180,7 @@ VALUES ('admin', 'admin123', 'System Admin', 'admin@ghads.com', 'ADMIN', NULL);
 ![Users](screenshots/Admin-user.png)
 
 ### Admin Family
-![Family](screenshots/Admin-Family.png)
+![Family](screenshots/Admin-family.png)
 
 ### Admin Organization
 ![Organization](screenshots/Admin-Org.png)
