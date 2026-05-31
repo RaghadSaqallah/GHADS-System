@@ -122,7 +122,8 @@ public class MenuBarController implements Initializable {
     private void aboutHandle(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About GHADS");
-        alert.setHeaderText("GHADS System");
+        alert.setHeaderText("Gaza Humanitarian Aid Distribution System.\n"
+                + "desktop application that helps multiple humanitarian organizations in Gaza ");
         Image m = new Image("/img/logo.png");
         ImageView img = new ImageView(m);
 
