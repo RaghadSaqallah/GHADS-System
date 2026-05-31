@@ -186,7 +186,7 @@ VALUES ('admin', 'admin123', 'System Admin', 'admin@ghads.com', 'ADMIN', NULL);
 ![Organization](screenshots/Admin-Org.png)
 
 ### Admin Users
-![Users](screenshots/Admin-Aid.png)
+![Aid](screenshots/Admin-Aid.png)
 
 
 ### Coordinator Dashboard
